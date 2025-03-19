@@ -14,9 +14,9 @@ def read_root():
 @app.post("/chamando-rabbit")
 def read_root(schema: CertificateSchema):
 
-    enviar_certificado(schema)
-    enviar_notificacao(schema)
-    salvar_dados(schema)
+    enviar_certificado.delay(schema.model_dump())
+    enviar_notificacao.delay(schema.model_dump())
+    salvar_dados.delay(schema.model_dump())
 
     data_retorno = {
         "status": "true",
